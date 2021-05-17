@@ -29,6 +29,8 @@ data "template_file" "user_data" {
     alb_dns_name     = aws_lb.web.dns_name
     redis_address    = data.terraform_remote_state.database.outputs.redis_address
     postgres_address = data.terraform_remote_state.database.outputs.postgres_address
+    postgres_user    = var.postgres_user
+    postgres_pass    = var.postgres_pass
   }
 }
 

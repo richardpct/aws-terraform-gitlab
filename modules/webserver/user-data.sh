@@ -12,8 +12,8 @@ postgresql['enable'] = false
 gitlab_rails['db_adapter'] = "postgresql"
 gitlab_rails['db_encoding'] = "unicode"
 gitlab_rails['db_database'] = "gitlabhq_production"
-gitlab_rails['db_username'] = "foo"
-gitlab_rails['db_password'] = "foobarbaz"
+gitlab_rails['db_username'] = "${postgres_user}"
+gitlab_rails['db_password'] = "${postgres_pass}"
 gitlab_rails['db_host'] = "${postgres_address}"
 
 redis['enable'] = false

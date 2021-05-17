@@ -14,6 +14,18 @@ variable "base_remote_state_key" {
   description = "base key"
 }
 
-variable "instance_type" {
-  description = "instance type"
+variable "redis_type" {
+  description = "redis type"
+}
+
+variable "postgres_type" {
+  description = "postgres type"
+}
+
+variable "postgres_user" {
+  description = "postgres user"
+}
+
+variable "postgres_pass" {
+  description = "postgres pass"
 }

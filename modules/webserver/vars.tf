@@ -29,3 +29,11 @@ variable "image_id" {
 variable "instance_type" {
   description = "instance type"
 }
+
+variable "postgres_user" {
+  description = "postgres user"
+}
+
+variable "postgres_pass" {
+  description = "postgres pass"
+}

@@ -13,4 +13,6 @@ module "webserver" {
   database_remote_state_key    = var.dev_database_key
   instance_type                = "t2.medium"
   image_id                     = "ami-072ec828dae86abe5"  # CentOS 7
+  postgres_user                = var.dev_postgres_user
+  postgres_pass                = var.dev_postgres_pass
 }
