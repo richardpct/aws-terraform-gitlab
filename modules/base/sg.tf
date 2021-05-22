@@ -110,6 +110,34 @@ resource "aws_security_group_rule" "alb_web_outbound_http" {
   security_group_id        = aws_security_group.alb_web.id
 }
 
+# Rules for alb web internal
+resource "aws_security_group" "alb_web_internal" {
+  name   = "sg_alb_web_internal-${var.env}"
+  vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "alb_web_internal_sg-${var.env}"
+  }
+}
+
+resource "aws_security_group_rule" "alb_web_internal_inbound_http" {
+  type                     = "ingress"
+  from_port                = local.http_port
+  to_port                  = local.http_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.runner.id
+  security_group_id        = aws_security_group.alb_web_internal.id
+}
+
+resource "aws_security_group_rule" "alb_web_internal_outbound_http" {
+  type                     = "egress"
+  from_port                = local.webserver_port
+  to_port                  = local.webserver_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.gitlab.id
+  security_group_id        = aws_security_group.alb_web_internal.id
+}
+
 # Rules for Gitlab
 resource "aws_security_group" "gitlab" {
   name   = "sg_gitlab-${var.env}"
@@ -135,6 +163,15 @@ resource "aws_security_group_rule" "gitlab_inbound_http" {
   to_port                  = local.webserver_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.alb_web.id
+  security_group_id        = aws_security_group.gitlab.id
+}
+
+resource "aws_security_group_rule" "webserver_inbound_http_internal" {
+  type                     = "ingress"
+  from_port                = local.webserver_port
+  to_port                  = local.webserver_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.alb_web_internal.id
   security_group_id        = aws_security_group.gitlab.id
 }
 
@@ -172,4 +209,41 @@ resource "aws_security_group_rule" "gitlab_outbound_postgres" {
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.postgres.id
   security_group_id        = aws_security_group.gitlab.id
+}
+
+# Rules for Runner
+resource "aws_security_group" "runner" {
+  name   = "sg_runner-${var.env}"
+  vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "runner_sg-${var.env}"
+  }
+}
+
+resource "aws_security_group_rule" "runner_inbound_ssh" {
+  type                     = "ingress"
+  from_port                = local.ssh_port
+  to_port                  = local.ssh_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.bastion.id
+  security_group_id        = aws_security_group.runner.id
+}
+
+resource "aws_security_group_rule" "runner_outbound_http" {
+  type              = "egress"
+  from_port         = local.http_port
+  to_port           = local.http_port
+  protocol          = "tcp"
+  cidr_blocks       = local.anywhere
+  security_group_id = aws_security_group.runner.id
+}
+
+resource "aws_security_group_rule" "runner_outbound_https" {
+  type              = "egress"
+  from_port         = local.https_port
+  to_port           = local.https_port
+  protocol          = "tcp"
+  cidr_blocks       = local.anywhere
+  security_group_id = aws_security_group.runner.id
 }

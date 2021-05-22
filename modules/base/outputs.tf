@@ -46,6 +46,14 @@ output "sg_alb_web_id" {
   value = aws_security_group.alb_web.id
 }
 
+output "sg_alb_web_internal_id" {
+  value = aws_security_group.alb_web_internal.id
+}
+
+output "sg_runner_id" {
+  value = aws_security_group.runner.id
+}
+
 output "aws_eip_bastion_id" {
   value = aws_eip.bastion.id
 }

@@ -14,12 +14,12 @@ variable "base_remote_state_key" {
   description = "base key"
 }
 
-variable "database_remote_state_bucket" {
+variable "webserver_remote_state_bucket" {
   description = "bucket"
 }
 
-variable "database_remote_state_key" {
-  description = "database key"
+variable "webserver_remote_state_key" {
+  description = "webserver key"
 }
 
 variable "image_id" {
@@ -30,14 +30,6 @@ variable "instance_type" {
   description = "instance type"
 }
 
-variable "gitlab_pass" {
-  description = "gitlab pass"
-}
-
-variable "postgres_user" {
-  description = "postgres user"
-}
-
-variable "postgres_pass" {
-  description = "postgres pass"
+variable "gitlab_token" {
+  description = "gitlab token"
 }
