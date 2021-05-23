@@ -58,6 +58,10 @@ output "aws_eip_bastion_id" {
   value = module.base.aws_eip_bastion_id
 }
 
+output "efs_file_system_gitlab_dns_name" {
+  value = module.base.efs_file_system_gitlab_dns_name
+}
+
 output "iam_instance_profile_name" {
   value = module.base.iam_instance_profile_name
 }

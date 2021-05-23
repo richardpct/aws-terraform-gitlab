@@ -5,6 +5,7 @@ locals {
   redis_port     = 6379
   postgres_port  = 5432
   webserver_port = 80
+  nfs_port       = 2049
   anywhere       = ["0.0.0.0/0"]
 }
 

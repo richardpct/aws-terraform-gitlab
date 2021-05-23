@@ -32,6 +32,7 @@ data "template_file" "user_data" {
     postgres_address = data.terraform_remote_state.database.outputs.postgres_address
     postgres_user    = var.postgres_user
     postgres_pass    = var.postgres_pass
+    efs_dns_name     = data.terraform_remote_state.base.outputs.efs_file_system_gitlab_dns_name
   }
 }
 

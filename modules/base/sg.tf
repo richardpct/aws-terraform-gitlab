@@ -211,6 +211,15 @@ resource "aws_security_group_rule" "gitlab_outbound_postgres" {
   security_group_id        = aws_security_group.gitlab.id
 }
 
+resource "aws_security_group_rule" "gitlab_outbound_efs" {
+  type                     = "egress"
+  from_port                = local.nfs_port
+  to_port                  = local.nfs_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.efs.id
+  security_group_id        = aws_security_group.gitlab.id
+}
+
 # Rules for Runner
 resource "aws_security_group" "runner" {
   name   = "sg_runner-${var.env}"
@@ -246,4 +255,23 @@ resource "aws_security_group_rule" "runner_outbound_https" {
   protocol          = "tcp"
   cidr_blocks       = local.anywhere
   security_group_id = aws_security_group.runner.id
+}
+
+# Rules for EFS
+resource "aws_security_group" "efs" {
+  name   = "sg_efs-${var.env}"
+  vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "efs_sg-${var.env}"
+  }
+}
+
+resource "aws_security_group_rule" "efs_inbound_gitlab" {
+  type                     = "ingress"
+  from_port                = local.nfs_port
+  to_port                  = local.nfs_port
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.gitlab.id
+  security_group_id        = aws_security_group.efs.id
 }
