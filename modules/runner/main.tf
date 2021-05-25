@@ -12,12 +12,12 @@ data "terraform_remote_state" "base" {
   }
 }
 
-data "terraform_remote_state" "webserver" {
+data "terraform_remote_state" "gitlab" {
   backend = "s3"
 
   config = {
-    bucket = var.webserver_remote_state_bucket
-    key    = var.webserver_remote_state_key
+    bucket = var.gitlab_remote_state_bucket
+    key    = var.gitlab_remote_state_key
     region = var.region
   }
 }
@@ -26,7 +26,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    alb_internal_dns_name = data.terraform_remote_state.webserver.outputs.aws_lb_web_internal_dns_name
+    alb_internal_dns_name = data.terraform_remote_state.gitlab.outputs.aws_lb_web_internal_dns_name
     gitlab_token          = var.gitlab_token
   }
 }

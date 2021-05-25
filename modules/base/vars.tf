@@ -1,12 +1,12 @@
 locals {
-  ssh_port       = 22
-  http_port      = 80
-  https_port     = 443
-  redis_port     = 6379
-  postgres_port  = 5432
-  webserver_port = 80
-  nfs_port       = 2049
-  anywhere       = ["0.0.0.0/0"]
+  ssh_port      = 22
+  http_port     = 80
+  https_port    = 443
+  redis_port    = 6379
+  postgres_port = 5432
+  gitlab_port   = 80
+  nfs_port      = 2049
+  anywhere      = ["0.0.0.0/0"]
 }
 
 variable "region" {

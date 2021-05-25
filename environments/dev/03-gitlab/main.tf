@@ -2,8 +2,8 @@ terraform {
   backend "s3" {}
 }
 
-module "webserver" {
-  source = "../../../modules/webserver"
+module "gitlab" {
+  source = "../../../modules/gitlab"
 
   region                       = "eu-west-3"
   env                          = "dev"

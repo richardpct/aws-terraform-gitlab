@@ -103,8 +103,8 @@ resource "aws_security_group_rule" "alb_web_inbound_http" {
 
 resource "aws_security_group_rule" "alb_web_outbound_http" {
   type                     = "egress"
-  from_port                = local.webserver_port
-  to_port                  = local.webserver_port
+  from_port                = local.gitlab_port
+  to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.gitlab.id
   security_group_id        = aws_security_group.alb_web.id
@@ -131,8 +131,8 @@ resource "aws_security_group_rule" "alb_web_internal_inbound_http" {
 
 resource "aws_security_group_rule" "alb_web_internal_outbound_http" {
   type                     = "egress"
-  from_port                = local.webserver_port
-  to_port                  = local.webserver_port
+  from_port                = local.gitlab_port
+  to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.gitlab.id
   security_group_id        = aws_security_group.alb_web_internal.id
@@ -159,17 +159,17 @@ resource "aws_security_group_rule" "gitlab_inbound_ssh" {
 
 resource "aws_security_group_rule" "gitlab_inbound_http" {
   type                     = "ingress"
-  from_port                = local.webserver_port
-  to_port                  = local.webserver_port
+  from_port                = local.gitlab_port
+  to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.alb_web.id
   security_group_id        = aws_security_group.gitlab.id
 }
 
-resource "aws_security_group_rule" "webserver_inbound_http_internal" {
+resource "aws_security_group_rule" "gitlab_inbound_http_internal" {
   type                     = "ingress"
-  from_port                = local.webserver_port
-  to_port                  = local.webserver_port
+  from_port                = local.gitlab_port
+  to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.alb_web_internal.id
   security_group_id        = aws_security_group.gitlab.id

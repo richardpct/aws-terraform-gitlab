@@ -6,7 +6,7 @@ variable "dev_base_key" {
   description = "terraform state for dev environment"
 }
 
-variable "dev_webserver_key" {
+variable "dev_gitlab_key" {
   description = "terraform state for dev environment"
 }
 

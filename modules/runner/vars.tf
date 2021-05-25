@@ -14,12 +14,12 @@ variable "base_remote_state_key" {
   description = "base key"
 }
 
-variable "webserver_remote_state_bucket" {
+variable "gitlab_remote_state_bucket" {
   description = "bucket"
 }
 
-variable "webserver_remote_state_key" {
-  description = "webserver key"
+variable "gitlab_remote_state_key" {
+  description = "gitlab key"
 }
 
 variable "image_id" {
