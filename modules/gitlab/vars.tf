@@ -34,6 +34,10 @@ variable "gitlab_pass" {
   description = "gitlab pass"
 }
 
+variable "gitlab_size_desired" {
+  description = "gitlab size desired"
+}
+
 variable "postgres_user" {
   description = "postgres user"
 }

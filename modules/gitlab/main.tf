@@ -57,8 +57,8 @@ resource "aws_autoscaling_group" "gitlab" {
   target_group_arns    = [aws_lb_target_group.web.arn, aws_lb_target_group.web_internal.arn]
   health_check_type    = "ELB"
 
-  min_size             = 1
-  max_size             = 1
+  min_size             = var.gitlab_size_desired
+  max_size             = var.gitlab_size_desired
 
   tag {
     key                 = "Name"

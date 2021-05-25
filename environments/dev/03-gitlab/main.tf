@@ -14,6 +14,7 @@ module "gitlab" {
   instance_type                = "c5.xlarge"
   image_id                     = "ami-072ec828dae86abe5"  # CentOS 7
   gitlab_pass                  = var.dev_gitlab_pass
+  gitlab_size_desired          = var.gitlab_size_desired
   postgres_user                = var.dev_postgres_user
   postgres_pass                = var.dev_postgres_pass
 }
