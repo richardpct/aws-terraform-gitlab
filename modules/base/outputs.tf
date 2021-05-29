@@ -42,12 +42,12 @@ output "sg_gitlab_id" {
   value = aws_security_group.gitlab.id
 }
 
-output "sg_alb_web_id" {
-  value = aws_security_group.alb_web.id
+output "sg_alb_gitlab_public_id" {
+  value = aws_security_group.alb_gitlab_public.id
 }
 
-output "sg_alb_web_internal_id" {
-  value = aws_security_group.alb_web_internal.id
+output "sg_alb_gitlab_internal_id" {
+  value = aws_security_group.alb_gitlab_internal.id
 }
 
 output "sg_runner_id" {

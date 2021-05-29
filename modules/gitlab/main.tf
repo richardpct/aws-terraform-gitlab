@@ -26,7 +26,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    alb_dns_name     = aws_lb.web.dns_name
+    alb_dns_name     = aws_lb.gitlab_public.dns_name
     gitlab_pass      = var.gitlab_pass
     redis_address    = data.terraform_remote_state.database.outputs.redis_address
     postgres_address = data.terraform_remote_state.database.outputs.postgres_address
@@ -54,7 +54,7 @@ resource "aws_autoscaling_group" "gitlab" {
   name                 = "asg_gitlab-${var.env}"
   launch_configuration = aws_launch_configuration.gitlab.id
   vpc_zone_identifier  = [data.terraform_remote_state.base.outputs.subnet_private_gitlab_a_id, data.terraform_remote_state.base.outputs.subnet_private_gitlab_b_id]
-  target_group_arns    = [aws_lb_target_group.web.arn, aws_lb_target_group.web_internal.arn]
+  target_group_arns    = [aws_lb_target_group.gitlab_public.arn, aws_lb_target_group.gitlab_internal.arn]
   health_check_type    = "ELB"
 
   min_size             = var.gitlab_size_desired

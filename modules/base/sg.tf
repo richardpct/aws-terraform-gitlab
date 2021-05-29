@@ -82,60 +82,60 @@ resource "aws_security_group_rule" "postgres_inbound_gitlab" {
   security_group_id        = aws_security_group.postgres.id
 }
 
-# Rules for alb web
-resource "aws_security_group" "alb_web" {
-  name   = "sg_alb_web-${var.env}"
+# Rules for alb gitlab public
+resource "aws_security_group" "alb_gitlab_public" {
+  name   = "sg_alb_gitlab_public-${var.env}"
   vpc_id = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "alb_web_sg-${var.env}"
+    Name = "alb_gitlab_public_sg-${var.env}"
   }
 }
 
-resource "aws_security_group_rule" "alb_web_inbound_http" {
+resource "aws_security_group_rule" "alb_gitlab_public_inbound_http" {
   type              = "ingress"
   from_port         = local.http_port
   to_port           = local.http_port
   protocol          = "tcp"
   cidr_blocks       = local.anywhere
-  security_group_id = aws_security_group.alb_web.id
+  security_group_id = aws_security_group.alb_gitlab_public.id
 }
 
-resource "aws_security_group_rule" "alb_web_outbound_http" {
+resource "aws_security_group_rule" "alb_gitlab_public_outbound_http" {
   type                     = "egress"
   from_port                = local.gitlab_port
   to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.gitlab.id
-  security_group_id        = aws_security_group.alb_web.id
+  security_group_id        = aws_security_group.alb_gitlab_public.id
 }
 
-# Rules for alb web internal
-resource "aws_security_group" "alb_web_internal" {
-  name   = "sg_alb_web_internal-${var.env}"
+# Rules for alb gitlab internal
+resource "aws_security_group" "alb_gitlab_internal" {
+  name   = "sg_alb_gitlab_internal-${var.env}"
   vpc_id = aws_vpc.my_vpc.id
 
   tags = {
-    Name = "alb_web_internal_sg-${var.env}"
+    Name = "alb_gitlab_internal_sg-${var.env}"
   }
 }
 
-resource "aws_security_group_rule" "alb_web_internal_inbound_http" {
+resource "aws_security_group_rule" "alb_gitlab_internal_inbound_http" {
   type                     = "ingress"
   from_port                = local.http_port
   to_port                  = local.http_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.runner.id
-  security_group_id        = aws_security_group.alb_web_internal.id
+  security_group_id        = aws_security_group.alb_gitlab_internal.id
 }
 
-resource "aws_security_group_rule" "alb_web_internal_outbound_http" {
+resource "aws_security_group_rule" "alb_gitlab_internal_outbound_http" {
   type                     = "egress"
   from_port                = local.gitlab_port
   to_port                  = local.gitlab_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.gitlab.id
-  security_group_id        = aws_security_group.alb_web_internal.id
+  security_group_id        = aws_security_group.alb_gitlab_internal.id
 }
 
 # Rules for Gitlab
@@ -162,7 +162,7 @@ resource "aws_security_group_rule" "gitlab_inbound_http" {
   from_port                = local.gitlab_port
   to_port                  = local.gitlab_port
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.alb_web.id
+  source_security_group_id = aws_security_group.alb_gitlab_public.id
   security_group_id        = aws_security_group.gitlab.id
 }
 
@@ -171,7 +171,7 @@ resource "aws_security_group_rule" "gitlab_inbound_http_internal" {
   from_port                = local.gitlab_port
   to_port                  = local.gitlab_port
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.alb_web_internal.id
+  source_security_group_id = aws_security_group.alb_gitlab_internal.id
   security_group_id        = aws_security_group.gitlab.id
 }
 

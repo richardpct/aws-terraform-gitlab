@@ -42,12 +42,12 @@ output "sg_gitlab_id" {
   value = module.base.sg_gitlab_id
 }
 
-output "sg_alb_web_id" {
-  value = module.base.sg_alb_web_id
+output "sg_alb_gitlab_public_id" {
+  value = module.base.sg_alb_gitlab_public_id
 }
 
-output "sg_alb_web_internal_id" {
-  value = module.base.sg_alb_web_internal_id
+output "sg_alb_gitlab_internal_id" {
+  value = module.base.sg_alb_gitlab_internal_id
 }
 
 output "sg_runner_id" {

@@ -26,7 +26,7 @@ data "template_file" "user_data" {
   template = file("${path.module}/user-data.sh")
 
   vars = {
-    alb_internal_dns_name = data.terraform_remote_state.gitlab.outputs.aws_lb_web_internal_dns_name
+    alb_internal_dns_name = data.terraform_remote_state.gitlab.outputs.aws_lb_gitlab_internal_dns_name
     gitlab_token          = var.gitlab_token
   }
 }
