@@ -18,12 +18,12 @@ output "subnet_private_gitlab_b_id" {
   value = aws_subnet.private_gitlab_b.id
 }
 
-output "subnet_private_db_a_id" {
-  value = aws_subnet.private_db_a.id
+output "subnet_private_a_id" {
+  value = aws_subnet.private_a.id
 }
 
-output "subnet_private_db_b_id" {
-  value = aws_subnet.private_db_b.id
+output "subnet_private_b_id" {
+  value = aws_subnet.private_b.id
 }
 
 output "sg_bastion_id" {

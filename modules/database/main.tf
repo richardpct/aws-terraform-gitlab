@@ -14,7 +14,7 @@ data "terraform_remote_state" "base" {
 
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "subnet-redis-${var.env}"
-  subnet_ids = [data.terraform_remote_state.base.outputs.subnet_private_db_a_id, data.terraform_remote_state.base.outputs.subnet_private_db_b_id]
+  subnet_ids = [data.terraform_remote_state.base.outputs.subnet_private_a_id, data.terraform_remote_state.base.outputs.subnet_private_b_id]
 }
 
 resource "aws_elasticache_cluster" "redis" {
@@ -30,7 +30,7 @@ resource "aws_elasticache_cluster" "redis" {
 
 resource "aws_db_subnet_group" "postgres" {
   name       = "subnet-postgres-${var.env}"
-  subnet_ids = [data.terraform_remote_state.base.outputs.subnet_private_db_a_id, data.terraform_remote_state.base.outputs.subnet_private_db_b_id]
+  subnet_ids = [data.terraform_remote_state.base.outputs.subnet_private_a_id, data.terraform_remote_state.base.outputs.subnet_private_b_id]
 }
 
 resource "aws_db_instance" "postgres" {

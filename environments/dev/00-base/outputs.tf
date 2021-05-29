@@ -18,12 +18,12 @@ output "subnet_private_gitlab_b_id" {
   value = module.base.subnet_private_gitlab_b_id
 }
 
-output "subnet_private_db_a_id" {
-  value = module.base.subnet_private_db_a_id
+output "subnet_private_a_id" {
+  value = module.base.subnet_private_a_id
 }
 
-output "subnet_private_db_b_id" {
-  value = module.base.subnet_private_db_b_id
+output "subnet_private_b_id" {
+  value = module.base.subnet_private_b_id
 }
 
 output "sg_bastion_id" {

@@ -12,8 +12,8 @@ module "base" {
   subnet_public_b         = "10.0.1.0/24"
   subnet_private_gitlab_a = "10.0.2.0/24"
   subnet_private_gitlab_b = "10.0.3.0/24"
-  subnet_private_db_a     = "10.0.4.0/24"
-  subnet_private_db_b     = "10.0.5.0/24"
+  subnet_private_a        = "10.0.4.0/24"
+  subnet_private_b        = "10.0.5.0/24"
   cidr_allowed_ssh        = var.my_ip_address
   ssh_public_key          = var.ssh_public_key
 }

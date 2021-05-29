@@ -57,23 +57,23 @@ resource "aws_subnet" "private_gitlab_b" {
   }
 }
 
-resource "aws_subnet" "private_db_a" {
+resource "aws_subnet" "private_a" {
   vpc_id            = aws_vpc.my_vpc.id
-  cidr_block        = var.subnet_private_db_a
+  cidr_block        = var.subnet_private_a
   availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = {
-    Name = "subnet_private_db_a-${var.env}"
+    Name = "subnet_private_a-${var.env}"
   }
 }
 
-resource "aws_subnet" "private_db_b" {
+resource "aws_subnet" "private_b" {
   vpc_id            = aws_vpc.my_vpc.id
-  cidr_block        = var.subnet_private_db_b
+  cidr_block        = var.subnet_private_b
   availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = {
-    Name = "subnet_private_db_b-${var.env}"
+    Name = "subnet_private_b-${var.env}"
   }
 }
 

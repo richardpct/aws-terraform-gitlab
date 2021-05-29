@@ -37,12 +37,12 @@ variable "subnet_private_gitlab_b" {
   description = "private gitlab subnet B"
 }
 
-variable "subnet_private_db_a" {
-  description = "private db subnet A"
+variable "subnet_private_a" {
+  description = "private subnet A"
 }
 
-variable "subnet_private_db_b" {
-  description = "private db subnet B"
+variable "subnet_private_b" {
+  description = "private subnet B"
 }
 
 variable "cidr_allowed_ssh" {
