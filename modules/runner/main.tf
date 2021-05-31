@@ -48,8 +48,8 @@ resource "aws_autoscaling_group" "runner" {
   name                 = "asg_runner-${var.env}"
   launch_configuration = aws_launch_configuration.runner.id
   vpc_zone_identifier  = [data.terraform_remote_state.base.outputs.subnet_private_gitlab_a_id, data.terraform_remote_state.base.outputs.subnet_private_gitlab_b_id]
-  min_size             = 1
-  max_size             = 1
+  min_size             = var.runner_nb_desired
+  max_size             = var.runner_nb_desired
 
   tag {
     key                 = "Name"

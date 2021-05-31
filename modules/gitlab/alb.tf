@@ -37,7 +37,7 @@ resource "aws_lb" "gitlab_internal" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = [data.terraform_remote_state.base.outputs.sg_alb_gitlab_internal_id]
-  subnets            = [data.terraform_remote_state.base.outputs.subnet_public_a_id, data.terraform_remote_state.base.outputs.subnet_public_b_id]
+  subnets            = [data.terraform_remote_state.base.outputs.subnet_private_a_id, data.terraform_remote_state.base.outputs.subnet_private_b_id]
 }
 
 resource "aws_lb_target_group" "gitlab_internal" {

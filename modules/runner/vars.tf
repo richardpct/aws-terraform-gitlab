@@ -30,6 +30,10 @@ variable "instance_type" {
   description = "instance type"
 }
 
+variable "runner_nb_desired" {
+  description = "number of runner desired"
+}
+
 variable "gitlab_token" {
   description = "gitlab token"
 }

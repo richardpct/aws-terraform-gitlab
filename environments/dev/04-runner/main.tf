@@ -13,5 +13,6 @@ module "runner" {
   gitlab_remote_state_key    = var.dev_gitlab_key
   instance_type              = "t2.micro"
   image_id                   = "ami-0ebc281c20e89ba4b"  # Amazon Linux 2018
+  runner_nb_desired          = var.runner_nb_desired
   gitlab_token               = var.gitlab_token
 }
