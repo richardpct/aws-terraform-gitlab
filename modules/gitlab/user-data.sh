@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+set -x -e
 
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 mkdir /var/opt/gitlab-nfs
@@ -28,3 +28,10 @@ gitlab_rails['shared_path'] = '/var/opt/gitlab-nfs/gitlab-data/shared'
 gitlab_ci['builds_directory'] = '/var/opt/gitlab-nfs/gitlab-data/builds'
 EOF
 gitlab-ctl reconfigure
+
+sudo gitlab-rake "gitlab:password:reset[root]" << EOF
+${gitlab_pass}
+${gitlab_pass}
+EOF
+
+echo "DONE"

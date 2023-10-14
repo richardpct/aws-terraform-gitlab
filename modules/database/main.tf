@@ -22,7 +22,7 @@ resource "aws_elasticache_cluster" "redis" {
   engine               = "redis"
   node_type            = var.redis_type
   num_cache_nodes      = 1
-  parameter_group_name = "default.redis6.x"
+  parameter_group_name = "default.redis7"
   port                 = 6379
   subnet_group_name    = aws_elasticache_subnet_group.redis.name
   security_group_ids   = [data.terraform_remote_state.base.outputs.sg_redis_id]
@@ -37,7 +37,7 @@ resource "aws_db_instance" "postgres" {
   allocated_storage       = 5
   engine                  = "postgres"
   instance_class          = var.postgres_type
-  name                    = "gitlabhq_production"
+  db_name                 = "gitlabhq_production"
   username                = var.postgres_user
   password                = var.postgres_pass
   skip_final_snapshot     = true

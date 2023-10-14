@@ -22,22 +22,15 @@ data "terraform_remote_state" "gitlab" {
   }
 }
 
-data "template_file" "user_data" {
-  template = file("${path.module}/user-data.sh")
-
-  vars = {
-    alb_internal_dns_name = data.terraform_remote_state.gitlab.outputs.aws_lb_gitlab_internal_dns_name
-    gitlab_token          = var.gitlab_token
-  }
-}
-
 resource "aws_launch_configuration" "runner" {
-  name                        = "runner-${var.env}"
-  image_id                    = var.image_id
-  user_data                   = data.template_file.user_data.rendered
-  instance_type               = var.instance_type
-  key_name                    = data.terraform_remote_state.base.outputs.ssh_key
-  security_groups             = [data.terraform_remote_state.base.outputs.sg_runner_id]
+  name            = "runner-${var.env}"
+  image_id        = var.image_id
+  user_data       = templatefile("${path.module}/user-data.sh",
+                                 { alb_internal_dns_name = data.terraform_remote_state.gitlab.outputs.aws_lb_gitlab_internal_dns_name,
+                                   gitlab_token          = var.gitlab_token })
+  instance_type   = var.instance_type
+  key_name        = data.terraform_remote_state.base.outputs.ssh_key
+  security_groups = [data.terraform_remote_state.base.outputs.sg_runner_id]
 
   lifecycle {
     create_before_destroy = true

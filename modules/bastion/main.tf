@@ -12,18 +12,10 @@ data "terraform_remote_state" "base" {
   }
 }
 
-data "template_file" "user_data" {
-  template = file("${path.module}/user-data.sh")
-
-  vars = {
-    eip_bastion_id = data.terraform_remote_state.base.outputs.aws_eip_bastion_id
-  }
-}
-
 resource "aws_launch_configuration" "bastion" {
   name                        = "bastion-${var.env}"
   image_id                    = var.image_id
-  user_data                   = data.template_file.user_data.rendered
+  user_data                   = templatefile("${path.module}/user-data.sh", {eip_bastion_id = data.terraform_remote_state.base.outputs.aws_eip_bastion_id})
   instance_type               = var.instance_type
   key_name                    = data.terraform_remote_state.base.outputs.ssh_key
   security_groups             = [data.terraform_remote_state.base.outputs.sg_bastion_id]

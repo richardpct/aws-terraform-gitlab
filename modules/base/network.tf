@@ -78,7 +78,7 @@ resource "aws_subnet" "private_b" {
 }
 
 resource "aws_eip" "nat_a" {
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name = "eip_nat_a-${var.env}"
@@ -86,7 +86,7 @@ resource "aws_eip" "nat_a" {
 }
 
 resource "aws_eip" "nat_b" {
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name = "eip_nat_b-${var.env}"
@@ -171,7 +171,7 @@ resource "aws_route_table_association" "private_gitlab_b" {
 }
 
 resource "aws_eip" "bastion" {
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name = "eip_bastion-${var.env}"
