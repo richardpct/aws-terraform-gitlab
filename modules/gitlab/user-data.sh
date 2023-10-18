@@ -3,12 +3,19 @@
 set -x -e
 
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
+sudo apt-get update -y
+sudo apt-get upgrade -y
+sudo apt-get install -y \
+  curl \
+  openssh-server \
+  ca-certificates \
+  tzdata perl \
+  nfs-common
 mkdir /var/opt/gitlab-nfs
 echo '${efs_dns_name}:/ /var/opt/gitlab-nfs nfs4 vers=4.1,hard,rsize=1048576,wsize=1048576,timeo=600,retrans=2,noresvport 0 2' >> /etc/fstab
 mount /var/opt/gitlab-nfs
-sudo yum -y update
-curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.rpm.sh | bash
-EXTERNAL_URL="http://${alb_dns_name}" yum install -y gitlab-ee
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+EXTERNAL_URL="http://${alb_dns_name}" apt-get install gitlab-ee
 cat << EOF >> /etc/gitlab/gitlab.rb
 postgresql['enable'] = false
 gitlab_rails['db_adapter'] = "postgresql"
@@ -34,4 +41,4 @@ ${gitlab_pass}
 ${gitlab_pass}
 EOF
 
-echo "DONE"
+[ -f /var/run/reboot-required ] && shutdown -r now

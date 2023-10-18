@@ -12,7 +12,7 @@ module "runner" {
   gitlab_remote_state_bucket = var.bucket
   gitlab_remote_state_key    = var.dev_gitlab_key
   instance_type              = "t2.micro"
-  image_id                   = "ami-0ebc281c20e89ba4b"  # Amazon Linux 2018
+  image_id                   = "ami-00983e8a26e4c9bd9"  # Ubuntu LTS
   runner_nb_desired          = var.runner_nb_desired
   gitlab_token               = var.gitlab_token
 }
