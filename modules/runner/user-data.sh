@@ -20,5 +20,6 @@ gitlab-runner register \
   --executor "docker" \
   --docker-image "docker:24.0.5" \
   --description "docker-runner" \
-  --docker-privileged
+  --docker-privileged \
+  --docker-volumes "/certs/client"
 [ -f /var/run/reboot-required ] && shutdown -r now
