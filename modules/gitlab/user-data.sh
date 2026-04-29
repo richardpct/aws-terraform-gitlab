@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -x -e
 
@@ -17,6 +17,8 @@ mount /var/opt/gitlab-nfs
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 EXTERNAL_URL="http://${alb_dns_name}" apt-get install gitlab-ee
 cat << EOF >> /etc/gitlab/gitlab.rb
+letsencrypt['enable'] = false
+
 postgresql['enable'] = false
 gitlab_rails['db_adapter'] = "postgresql"
 gitlab_rails['db_encoding'] = "unicode"
@@ -29,11 +31,19 @@ redis['enable'] = false
 gitlab_rails['redis_host'] = "${redis_address}"
 gitlab_rails['redis_port'] = 6379
 
-git_data_dirs({"default" => { "path" => "/var/opt/gitlab-nfs/gitlab-data/git-data"} })
+gitaly['configuration'] = {
+  storage: [
+    {
+      name: 'default',
+      path: '/var/opt/gitlab-nfs/gitlab-data/git-data/repositories',
+    },
+  ],
+}
 gitlab_rails['uploads_directory'] = '/var/opt/gitlab-nfs/gitlab-data/uploads'
 gitlab_rails['shared_path'] = '/var/opt/gitlab-nfs/gitlab-data/shared'
 gitlab_ci['builds_directory'] = '/var/opt/gitlab-nfs/gitlab-data/builds'
 EOF
+
 gitlab-ctl reconfigure
 
 sudo gitlab-rake "gitlab:password:reset[root]" << EOF
