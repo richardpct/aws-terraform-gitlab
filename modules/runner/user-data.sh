@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -x -e
 
@@ -18,7 +18,7 @@ gitlab-runner register \
   --clone-url "http://${alb_internal_dns_name}" \
   --registration-token "${gitlab_token}" \
   --executor "docker" \
-  --docker-image "docker:24.0.5" \
+  --docker-image "docker:29.4.1" \
   --description "docker-runner" \
   --docker-privileged \
   --docker-volumes "/certs/client"
