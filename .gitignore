@@ -9,6 +9,3 @@
 *.tfvars
 
 .terraform.lock.hcl
-terraform_init.sh
-
-Makefile
